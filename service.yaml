@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: canary-test
+  name: flagger-test
+  namespace: flagger-test
+spec:
+  ports:
+  - name: tcp
+    port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: canary-test

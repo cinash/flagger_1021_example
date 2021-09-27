@@ -1,0 +1,30 @@
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: flagger-test
+  namespace: flagger-test
+spec:
+  analysis:
+    interval: 1m
+    iterations: 120
+    match:
+    - sourceLabels:
+        version: version-x
+    threshold: 10
+    webhooks:
+      - name: "rollback"
+        type: rollback
+        url: http://example.com/rollback/check
+  progressDeadlineSeconds: 3600
+  service:
+    hosts:
+    - flagger-test
+    port: 3000
+    portName: tcp
+    trafficPolicy:
+      tls:
+        mode: ISTIO_MUTUAL
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: flagger-test

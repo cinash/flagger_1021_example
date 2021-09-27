@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  creationTimestamp: "2021-09-23T14:40:41Z"
+  generation: 2
+  labels:
+    app: flagger-test
+  name: flagger-test
+  namespace: flagger-test
+spec:
+  gateways:
+  - mesh
+  hosts:
+  - flagger-test
+  tcp:
+  - match:
+    - sourceLabels:
+        version: version-x
+    route:
+    - destination:
+        host: flagger-test
